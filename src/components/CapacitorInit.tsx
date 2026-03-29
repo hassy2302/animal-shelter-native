@@ -15,8 +15,8 @@ export default function CapacitorInit() {
         import("@capacitor/network"),
       ]);
 
-      // 1. 스플래시 스크린 숨기기
-      await SplashScreen.hide({ fadeOutDuration: 300 });
+      // 1. 스플래시 스크린 숨기기 (웹 오버레이로 자연스럽게 이어지도록 빠르게)
+      await SplashScreen.hide({ fadeOutDuration: 100 });
 
       // 2. 상태바 색상 설정 (브랜드 색상 #6366f1)
       await StatusBar.setStyle({ style: Style.Dark });
