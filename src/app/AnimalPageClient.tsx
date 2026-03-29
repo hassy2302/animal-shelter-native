@@ -30,7 +30,7 @@ export default function AnimalPageClient({ initialData }: Props) {
   const [favoriteLoading, setFavoriteLoading] = useState(false);
   const { data, animals, total, totalPages, fetchedAt, isLoading, error, refresh } = useAnimals(filters);
   const { isOnline } = useNetwork();
-  const { favorites, count: favCount } = useFavorites();
+  const { favorites, count: favCount, cleanup } = useFavorites();
 
   useEffect(() => {
     if (!showFavoritesOnly || favorites.size === 0) {
@@ -39,10 +39,13 @@ export default function AnimalPageClient({ initialData }: Props) {
     }
     setFavoriteLoading(true);
     fetchAnimalsBatch([...favorites])
-      .then(setFavoriteAnimals)
+      .then((result) => {
+        setFavoriteAnimals(result);
+        cleanup(result.map((a: Animal) => a.noticeNo));
+      })
       .catch(() => setFavoriteAnimals([]))
       .finally(() => setFavoriteLoading(false));
-  }, [showFavoritesOnly, favorites]);
+  }, [showFavoritesOnly, favorites, cleanup]);
   const pathname = usePathname();
   const isFirstRender = useRef(true);
 
