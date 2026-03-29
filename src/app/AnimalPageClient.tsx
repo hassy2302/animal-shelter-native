@@ -6,6 +6,7 @@ import type { AnimalListResponse } from "@/types/animal";
 import type { AnimalFilters } from "@/types/animal";
 import { useAnimals } from "@/hooks/useAnimals";
 import { useNetwork } from "@/hooks/useNetwork";
+import { useFavorites } from "@/contexts/FavoritesContext";
 import { DEFAULT_FILTERS } from "@/lib/constants";
 import Header from "@/components/layout/Header";
 import StatsBar from "@/components/layout/StatsBar";
@@ -22,8 +23,10 @@ interface Props {
 export default function AnimalPageClient({ initialData }: Props) {
   const [filters, setFilters] = useState<AnimalFilters>({ ...DEFAULT_FILTERS });
   const [searchInput, setSearchInput] = useState("");
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const { data, animals, total, totalPages, fetchedAt, isLoading, error, refresh } = useAnimals(filters);
   const { isOnline } = useNetwork();
+  const { favorites, count: favCount } = useFavorites();
   const pathname = usePathname();
   const isFirstRender = useRef(true);
 
@@ -86,7 +89,8 @@ export default function AnimalPageClient({ initialData }: Props) {
     window.history.replaceState(null, "", pathname + (query ? `?${query}` : ""));
   }, [filters, pathname]);
 
-  const displayAnimals = data !== undefined ? animals : (initialData?.items ?? []);
+  const rawAnimals = data !== undefined ? animals : (initialData?.items ?? []);
+  const displayAnimals = showFavoritesOnly ? rawAnimals.filter((a: { noticeNo: string }) => favorites.has(a.noticeNo)) : rawAnimals;
   const displayTotal = data !== undefined ? total : (initialData?.total ?? 0);
   const displayTotalPages = data !== undefined ? totalPages : (initialData?.total_pages ?? 1);
   const displayFetchedAt = data !== undefined ? fetchedAt : initialData?.fetched_at;
@@ -144,6 +148,20 @@ export default function AnimalPageClient({ initialData }: Props) {
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
         />
+      </div>
+
+      {/* 찜 토글 */}
+      <div className="mb-3">
+        <button
+          onClick={() => setShowFavoritesOnly((v: boolean) => !v)}
+          className={`text-sm font-bold px-4 py-1.5 rounded-full border transition-colors ${
+            showFavoritesOnly
+              ? "bg-red-50 text-red-500 border-red-300"
+              : "bg-white text-[var(--muted)] border-[var(--border)] hover:border-red-300"
+          }`}
+        >
+          {showFavoritesOnly ? "❤️ 찜한 동물만" : `🤍 찜한 동물 (${favCount})`}
+        </button>
       </div>
 
       {/* 지역/상태 필터 */}
