@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import type { AnimalListResponse } from "@/types/animal";
 import type { AnimalFilters } from "@/types/animal";
 import { useAnimals } from "@/hooks/useAnimals";
+import { useNetwork } from "@/hooks/useNetwork";
 import { DEFAULT_FILTERS } from "@/lib/constants";
 import Header from "@/components/layout/Header";
 import StatsBar from "@/components/layout/StatsBar";
@@ -21,9 +22,34 @@ interface Props {
 export default function AnimalPageClient({ initialData }: Props) {
   const [filters, setFilters] = useState<AnimalFilters>({ ...DEFAULT_FILTERS });
   const [searchInput, setSearchInput] = useState("");
-  const { data, animals, total, totalPages, fetchedAt, isLoading, error } = useAnimals(filters);
+  const { data, animals, total, totalPages, fetchedAt, isLoading, error, refresh } = useAnimals(filters);
+  const { isOnline } = useNetwork();
   const pathname = usePathname();
   const isFirstRender = useRef(true);
+
+  // 당겨서 새로고침
+  const [pullRefreshing, setPullRefreshing] = useState(false);
+  const touchStartY = useRef(0);
+
+  useEffect(() => {
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY.current = e.touches[0].clientY;
+    };
+    const handleTouchEnd = async (e: TouchEvent) => {
+      const distance = e.changedTouches[0].clientY - touchStartY.current;
+      if (distance > 80 && window.scrollY === 0 && !isLoading && !pullRefreshing) {
+        setPullRefreshing(true);
+        await refresh();
+        setPullRefreshing(false);
+      }
+    };
+    document.addEventListener("touchstart", handleTouchStart, { passive: true });
+    document.addEventListener("touchend", handleTouchEnd, { passive: true });
+    return () => {
+      document.removeEventListener("touchstart", handleTouchStart);
+      document.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, [isLoading, pullRefreshing, refresh]);
 
   const updateFilters = useCallback((patch: Partial<AnimalFilters>) => {
     setFilters((prev) => ({ ...prev, ...patch, page: patch.page ?? 1 }));
@@ -68,6 +94,24 @@ export default function AnimalPageClient({ initialData }: Props) {
 
   return (
     <main className="max-w-screen-xl mx-auto px-4 py-8">
+      {/* 당겨서 새로고침 인디케이터 */}
+      {pullRefreshing && (
+        <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center py-3 bg-brand-500 text-white text-sm font-semibold">
+          <svg className="animate-spin w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+          </svg>
+          새로고침 중...
+        </div>
+      )}
+
+      {/* 오프라인 배너 */}
+      {!isOnline && (
+        <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center py-3 bg-[#EF4444] text-white text-sm font-semibold">
+          📡 인터넷에 연결되어 있지 않습니다
+        </div>
+      )}
+
       <Header />
 
       {/* 신고 안내 배너 */}
@@ -162,9 +206,17 @@ export default function AnimalPageClient({ initialData }: Props) {
               ? "서버에 연결할 수 없어요"
               : "데이터를 불러오지 못했어요"}
           </p>
-          <p className="text-sm text-[var(--muted)]">{error.message === "서버 응답 시간이 초과됐어요"
-            ? "서버가 응답하지 않습니다. 잠시 후 다시 시도해주세요."
-            : "잠시 후 다시 시도해주세요."}</p>
+          <p className="text-sm text-[var(--muted)] mb-6">
+            {error.message === "서버 응답 시간이 초과됐어요"
+              ? "서버가 응답하지 않습니다. 잠시 후 다시 시도해주세요."
+              : "잠시 후 다시 시도해주세요."}
+          </p>
+          <button
+            onClick={() => refresh()}
+            className="px-6 py-2.5 bg-brand-500 text-white text-sm font-bold rounded-full hover:bg-brand-600 transition-colors active:scale-95"
+          >
+            다시 시도
+          </button>
         </div>
       )}
 

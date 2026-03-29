@@ -1,5 +1,6 @@
 import Script from "next/script";
 import "./globals.css";
+import CapacitorInit from "@/components/CapacitorInit";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -13,7 +14,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           strategy="afterInteractive"
         />
       </head>
-      <body className="min-h-screen bg-[var(--bg)]">{children}</body>
+      <body className="min-h-screen bg-[var(--bg)]">
+        <CapacitorInit />
+        {children}
+      </body>
     </html>
   );
 }

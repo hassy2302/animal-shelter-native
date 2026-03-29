@@ -48,13 +48,23 @@ export default function AnimalDetailModal({ animal, onClose }: Props) {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
+    const handleBack = (e: Event) => {
+      e.preventDefault(); // CapacitorInit의 기본 동작 막기
+      if (showShare) {
+        setShowShare(false);
+      } else {
+        onClose();
+      }
+    };
     document.addEventListener("keydown", handleKey);
+    window.addEventListener("capacitor:back", handleBack);
     document.body.style.overflow = "hidden";
     return () => {
       document.removeEventListener("keydown", handleKey);
+      window.removeEventListener("capacitor:back", handleBack);
       document.body.style.overflow = "";
     };
-  }, [onClose]);
+  }, [onClose, showShare]);
 
   return (
     <div

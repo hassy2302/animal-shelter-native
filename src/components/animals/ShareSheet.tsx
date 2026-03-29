@@ -27,8 +27,13 @@ export default function ShareSheet({ url, title, imageUrl, onClose }: ShareSheet
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    const handleBack = (e: Event) => { e.preventDefault(); onClose(); };
     document.addEventListener("keydown", handleKey);
-    return () => document.removeEventListener("keydown", handleKey);
+    window.addEventListener("capacitor:back", handleBack);
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      window.removeEventListener("capacitor:back", handleBack);
+    };
   }, [onClose]);
 
   const handleKakao = () => {
