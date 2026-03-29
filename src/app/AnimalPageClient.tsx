@@ -31,6 +31,16 @@ export default function AnimalPageClient({ initialData }: Props) {
   const { data, animals, total, totalPages, fetchedAt, isLoading, error, refresh } = useAnimals(filters);
   const { isOnline } = useNetwork();
   const { favorites, count: favCount, cleanup } = useFavorites();
+  const cleanupDone = useRef(false);
+
+  // 앱 시작 시 찜 목록 자동 정리 (종료된 공고 제거)
+  useEffect(() => {
+    if (cleanupDone.current || favorites.size === 0) return;
+    cleanupDone.current = true;
+    fetchAnimalsBatch([...favorites])
+      .then((result) => cleanup(result.map((a: Animal) => a.noticeNo)))
+      .catch(() => {});
+  }, [favorites, cleanup]);
 
   useEffect(() => {
     if (!showFavoritesOnly || favorites.size === 0) {
