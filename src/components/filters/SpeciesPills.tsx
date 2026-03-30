@@ -19,7 +19,7 @@ export default function SpeciesPills({ value, onChange }: SpeciesPillsProps) {
             aria-label={`${opt} 필터`}
             aria-pressed={value === opt}
             className={cn(
-              "text-base font-semibold px-3 py-1.5 rounded-full border transition-colors",
+              "text-base font-semibold px-3 py-1.5 rounded-full border transition-colors whitespace-nowrap",
               value === opt
                 ? "bg-brand-bg text-brand-500 border-brand-300"
                 : "bg-white text-[var(--muted)] border-[var(--border)] hover:border-brand-200 hover:text-brand-500",
