@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Share } from "@capacitor/share";
 
 interface ShareSheetProps {
   url: string;
@@ -24,11 +25,6 @@ interface KakaoSDK {
 
 export default function ShareSheet({ url, title, imageUrl, onClose }: ShareSheetProps) {
   const [copied, setCopied] = useState(false);
-  const [canShare, setCanShare] = useState(false);
-
-  useEffect(() => {
-    setCanShare(typeof navigator.share === "function");
-  }, []);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
@@ -77,14 +73,12 @@ export default function ShareSheet({ url, title, imageUrl, onClose }: ShareSheet
   };
 
   const handleMore = async () => {
-    if (typeof navigator.share === "function") {
-      try {
-        await navigator.share({ title: title ?? "유기동물 공고", text: url });
-      } catch {
-        // 취소 또는 오류 무시
-      } finally {
-        onClose();
-      }
+    try {
+      await Share.share({ title: title ?? "유기동물 공고", url });
+    } catch {
+      // 취소 또는 오류 무시
+    } finally {
+      onClose();
     }
   };
 
@@ -140,14 +134,12 @@ export default function ShareSheet({ url, title, imageUrl, onClose }: ShareSheet
           </button>
 
           {/* 더보기 */}
-          {canShare && (
-            <button onClick={handleMore} className="flex flex-col items-center gap-2 group">
-              <div className="w-14 h-14 rounded-2xl bg-[#F5F4F2] flex items-center justify-center text-2xl shadow-sm group-hover:bg-[#ECEAE8] transition-all">
-                ···
-              </div>
-              <span className="text-xs font-semibold text-[var(--text)]">더보기</span>
-            </button>
-          )}
+          <button onClick={handleMore} className="flex flex-col items-center gap-2 group">
+            <div className="w-14 h-14 rounded-2xl bg-[#F5F4F2] flex items-center justify-center text-2xl shadow-sm group-hover:bg-[#ECEAE8] transition-all">
+              ···
+            </div>
+            <span className="text-xs font-semibold text-[var(--text)]">더보기</span>
+          </button>
 
           {/* 링크 복사 */}
           <button onClick={handleCopy} className="flex flex-col items-center gap-2 group">
