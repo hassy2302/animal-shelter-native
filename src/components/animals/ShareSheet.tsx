@@ -24,6 +24,11 @@ interface KakaoSDK {
 
 export default function ShareSheet({ url, title, imageUrl, onClose }: ShareSheetProps) {
   const [copied, setCopied] = useState(false);
+  const [canShare, setCanShare] = useState(false);
+
+  useEffect(() => {
+    setCanShare(typeof navigator.share === "function");
+  }, []);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
@@ -135,7 +140,7 @@ export default function ShareSheet({ url, title, imageUrl, onClose }: ShareSheet
           </button>
 
           {/* 더보기 */}
-          {typeof navigator !== "undefined" && typeof navigator.share === "function" && (
+          {canShare && (
             <button onClick={handleMore} className="flex flex-col items-center gap-2 group">
               <div className="w-14 h-14 rounded-2xl bg-[#F5F4F2] flex items-center justify-center text-2xl shadow-sm group-hover:bg-[#ECEAE8] transition-all">
                 ···
