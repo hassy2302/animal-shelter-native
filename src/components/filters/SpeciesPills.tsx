@@ -10,10 +10,11 @@ interface SpeciesPillsProps {
 
 export default function SpeciesPills({ value, onChange }: SpeciesPillsProps) {
   return (
-    <div className="flex flex-wrap gap-2">
-      {SPECIES_OPTIONS.map((opt) => (
-        <span key={opt} className="inline-flex items-center gap-1">
+    <div>
+      <div className="flex flex-wrap gap-2">
+        {SPECIES_OPTIONS.map((opt) => (
           <button
+            key={opt}
             onClick={() => onChange(opt)}
             aria-label={`${opt} 필터`}
             aria-pressed={value === opt}
@@ -26,13 +27,11 @@ export default function SpeciesPills({ value, onChange }: SpeciesPillsProps) {
           >
             {opt}
           </button>
-          {opt === "기타" && (
-            <span className="text-sm text-[var(--muted)]">
-              — ex) 토끼임에도 토끼 메뉴에 없는 경우는 기타로 분류됩니다
-            </span>
-          )}
-        </span>
-      ))}
+        ))}
+      </div>
+      <p className="text-xs text-[var(--muted)] mt-1.5">
+        ex) 토끼임에도 토끼 메뉴에 없는 경우는 기타로 분류됩니다
+      </p>
     </div>
   );
 }
