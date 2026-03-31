@@ -176,12 +176,12 @@ export default function AnimalPageClient({ initialData }: Props) {
       <Header />
 
       {/* 신고 안내 배너 */}
-      <div className="mb-4 px-5 py-3.5 bg-[#FFF1E6] border border-brand-200 rounded-2xl text-center">
-        <p className="text-base font-bold text-[#9A3412] mb-2.5">🐾 유기동물을 발견하셨나요?</p>
+      <div className="mb-4 px-5 py-3.5 bg-[#FFF1E6] dark:bg-[#431407] border border-brand-200 dark:border-[#7C2D12] rounded-2xl text-center">
+        <p className="text-base font-bold text-[#9A3412] dark:text-[#FB923C] mb-2.5">🐾 유기동물을 발견하셨나요?</p>
         <div className="flex items-center justify-center gap-3">
           <a
             href="tel:1577-0954"
-            className="text-base font-bold text-brand-500 hover:text-brand-600 bg-white border border-brand-200 px-4 py-1.5 rounded-full transition-colors shadow-sm whitespace-nowrap"
+            className="text-base font-bold text-brand-500 hover:text-brand-600 bg-white dark:bg-[#292524] border border-brand-200 dark:border-[#7C2D12] px-4 py-1.5 rounded-full transition-colors shadow-sm whitespace-nowrap"
           >
             📞 1577-0954
           </a>
@@ -189,7 +189,7 @@ export default function AnimalPageClient({ initialData }: Props) {
             href="https://www.animal.go.kr"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-base font-bold text-brand-500 hover:text-brand-600 bg-white border border-brand-200 px-4 py-1.5 rounded-full transition-colors shadow-sm whitespace-nowrap"
+            className="text-base font-bold text-brand-500 hover:text-brand-600 bg-white dark:bg-[#292524] border border-brand-200 dark:border-[#7C2D12] px-4 py-1.5 rounded-full transition-colors shadow-sm whitespace-nowrap"
           >
             🌐 홈페이지 신고
           </a>
@@ -213,8 +213,8 @@ export default function AnimalPageClient({ initialData }: Props) {
           onClick={() => { setShowFavoritesOnly((v: boolean) => !v); setShowRecentOnly(false); }}
           className={`text-sm font-bold px-4 py-1.5 rounded-full border transition-colors ${
             showFavoritesOnly
-              ? "bg-red-50 text-red-500 border-red-300"
-              : "bg-white text-[var(--muted)] border-[var(--border)] hover:border-red-300"
+              ? "bg-red-50 dark:bg-[#4C0519] text-red-500 border-red-300 dark:border-[#9F1239]"
+              : "bg-white dark:bg-[#292524] text-[var(--muted)] border-[var(--border)] hover:border-red-300"
           }`}
         >
           {showFavoritesOnly ? "❤️ 찜한 동물만" : `🤍 찜한 동물 (${favCount})`}
@@ -224,8 +224,8 @@ export default function AnimalPageClient({ initialData }: Props) {
             onClick={() => { setShowRecentOnly((v: boolean) => !v); setShowFavoritesOnly(false); }}
             className={`text-sm font-bold px-4 py-1.5 rounded-full border transition-colors ${
               showRecentOnly
-                ? "bg-blue-50 text-blue-500 border-blue-300"
-                : "bg-white text-[var(--muted)] border-[var(--border)] hover:border-blue-300"
+                ? "bg-blue-50 dark:bg-[#172554] text-blue-500 border-blue-300 dark:border-[#1E3A8A]"
+                : "bg-white dark:bg-[#292524] text-[var(--muted)] border-[var(--border)] hover:border-blue-300"
             }`}
           >
             {showRecentOnly ? "🕐 최근 본 동물만" : `🕐 최근 본 동물 (${recentCount})`}
@@ -246,7 +246,7 @@ export default function AnimalPageClient({ initialData }: Props) {
           onChange={(e) => setSearchInput(e.target.value)}
           placeholder="🔍 공고번호, 보호소명, 발견장소 등 검색"
           aria-label="동물 검색"
-          className={`w-full text-base bg-white border rounded-lg px-4 py-2.5 text-[var(--text)] placeholder:text-[var(--muted)] focus:outline-none focus:ring-1 focus:ring-brand-300 transition-colors ${
+          className={`w-full text-base bg-white dark:bg-[#292524] border rounded-lg px-4 py-2.5 text-[var(--text)] placeholder:text-[var(--muted)] focus:outline-none focus:ring-1 focus:ring-brand-300 transition-colors ${
             searchInput !== (filters.search ?? "")
               ? "border-brand-300"
               : "border-[var(--border)]"
@@ -269,7 +269,7 @@ export default function AnimalPageClient({ initialData }: Props) {
               className={`text-sm px-2.5 py-1 rounded-lg font-bold transition-colors ${
                 (filters.sort ?? "latest") === v
                   ? "bg-brand-500 text-white"
-                  : "bg-white border border-[var(--border)] text-[var(--muted)] hover:border-brand-300"
+                  : "bg-white dark:bg-[#292524] border border-[var(--border)] text-[var(--muted)] hover:border-brand-300"
               }`}
             >
               {v === "latest" ? "최신순" : "과거순"}
@@ -284,7 +284,7 @@ export default function AnimalPageClient({ initialData }: Props) {
               className={`text-sm px-2.5 py-1 rounded-lg font-bold transition-colors ${
                 activePerPage === n
                   ? "bg-brand-500 text-white"
-                  : "bg-white border border-[var(--border)] text-[var(--muted)] hover:border-brand-300"
+                  : "bg-white dark:bg-[#292524] border border-[var(--border)] text-[var(--muted)] hover:border-brand-300"
               }`}
             >
               {n}
