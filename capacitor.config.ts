@@ -6,7 +6,7 @@ const config: CapacitorConfig = {
   webDir: 'out',
   server: {
     androidScheme: 'https',
-    hostname: 'animal-shelter-navy.vercel.app',
+    hostname: 'hamsoto.kr',
   },
   android: {
     allowMixedContent: true,
@@ -20,6 +20,7 @@ const config: CapacitorConfig = {
       launchAutoHide: false,
       backgroundColor: '#38BDF8',
       showSpinner: false,
+      androidScaleType: 'CENTER_CROP',
     },
     StatusBar: {
       style: 'DARK',
