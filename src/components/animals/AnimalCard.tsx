@@ -13,6 +13,15 @@ import { useRecentlyViewed } from "@/contexts/RecentlyViewedContext";
 
 const SEX_LABEL: Record<string, string> = { M: "수컷", F: "암컷", Q: "미상" };
 
+function InfoRow({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
+  return (
+    <p className="text-xs truncate">
+      <span className="text-[#B8B4AF] dark:text-[#78716C]">{label} : </span>
+      <span className={accent ? "text-brand-500 font-semibold" : "text-[var(--text)]"}>{value}</span>
+    </p>
+  );
+}
+
 export default function AnimalCard({ animal }: { animal: Animal }) {
   const {
     noticeNo, kindNm, upkind, sexCd, age, colorCd, weight,
@@ -65,10 +74,8 @@ export default function AnimalCard({ animal }: { animal: Animal }) {
 
         {/* 중간 정보 */}
         <div className="flex-1 min-w-0 flex flex-col gap-1 p-2.5 justify-center">
-          {/* 공고 번호 */}
-          <p className="text-[10px] text-[#B8B4AF] dark:text-[#78716C] truncate">📋 {noticeNo}</p>
           {/* 종류 + 배지 */}
-          <div className="flex items-center gap-1 flex-wrap">
+          <div className="flex items-center gap-1 flex-wrap mb-0.5">
             {source === "daejeon" && (
               <span className="text-[10px] font-bold px-1 py-0.5 rounded-full bg-[#FFFBEB] text-[#B45309] border border-[#FDE68A] dark:bg-[#422006] dark:text-[#FBBF24] dark:border-[#92400E]">
                 대전시
@@ -77,22 +84,13 @@ export default function AnimalCard({ animal }: { animal: Animal }) {
             <span className="text-sm font-extrabold text-[var(--text)] truncate">{kindNm}</span>
             <StateBadge state={processState} />
           </div>
-          {/* 보호소 */}
-          <p className="text-xs text-[#57534E] dark:text-[#A8A29E] truncate">
-            🏠 <span className="font-semibold text-[var(--text)]">{careNm}</span>
-          </p>
-          {/* 구조일 */}
-          {happenDt && (
-            <p className="text-xs text-[#57534E] dark:text-[#A8A29E]">
-              🚑 {formatDate(happenDt)}
-            </p>
-          )}
-          {/* 공고 마감 */}
-          {noticeEdt && (
-            <p className="text-xs text-brand-500 font-semibold">
-              📅 ~{formatDate(noticeEdt)}
-            </p>
-          )}
+          {/* 라벨형 정보 rows */}
+          <div className="flex flex-col gap-0.5">
+            <InfoRow label="공고 번호" value={noticeNo} />
+            <InfoRow label="보호소" value={careNm} />
+            {happenDt && <InfoRow label="구조일" value={formatDate(happenDt)} />}
+            {noticeEdt && <InfoRow label="공고 기간" value={`~${formatDate(noticeEdt)}`} accent />}
+          </div>
         </div>
 
         {/* 우측 컬럼: 찜 + 버튼 */}
