@@ -14,7 +14,7 @@ export default function AnimalGrid({ animals, isLoading, emptyMessage, emptySubM
       <div className="grid grid-cols-1 gap-4">
         {Array.from({ length: 12 }).map((_, i) => (
           <div key={i} className="bg-white dark:bg-[#292524] border border-[var(--border)] rounded-2xl overflow-hidden animate-pulse flex flex-row">
-            <div className="shrink-0 w-28 aspect-square bg-brand-100 dark:bg-[#3D3935]" />
+            <div className="shrink-0 w-28 aspect-[3/4] bg-brand-100 dark:bg-[#3D3935]" />
             <div className="flex-1 p-3 space-y-2 flex flex-col justify-center">
               <div className="h-3 bg-gray-100 dark:bg-[#3D3935] rounded w-3/4" />
               <div className="h-3 bg-gray-100 dark:bg-[#3D3935] rounded w-1/2" />

@@ -156,13 +156,13 @@ export default function AnimalDetailModal({ animal, onClose }: Props) {
                   📞 {careTel}
                 </a>
               )}
-              <p>📍 {orgNm}</p>
-              {happenPlace && <p>📌 발견장소: {happenPlace}</p>}
+              <p>📍 보호 기관 위치 : {orgNm}</p>
+              {happenPlace && <p>📌 발견 장소 : {happenPlace}</p>}
             </div>
 
             {/* 날짜 */}
             {(happenDt || noticeEdt) && (
-              <div className="flex flex-col sm:flex-row gap-2">
+              <div className="flex flex-row gap-2">
                 {happenDt && (
                   <div className="flex-1 bg-[#F8F7F5] dark:bg-[#3D3935] rounded-xl px-3 py-2.5 text-center">
                     <div className="text-xs text-[var(--muted)] mb-0.5">🚑 구조일</div>
