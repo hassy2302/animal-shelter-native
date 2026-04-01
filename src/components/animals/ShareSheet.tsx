@@ -119,8 +119,12 @@ export default function ShareSheet({ url, title, imageUrl, onClose }: ShareSheet
         <div className="flex justify-around">
           {/* 카카오톡 */}
           <button onClick={handleKakao} className="flex flex-col items-center gap-2 group">
-            <div className="w-14 h-14 rounded-2xl bg-[#FEE500] flex items-center justify-center text-2xl shadow-sm group-hover:brightness-95 transition-all">
-              💬
+            <div className="w-14 h-14 rounded-2xl overflow-hidden shadow-sm group-hover:brightness-95 transition-all">
+              <img
+                src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"
+                alt="카카오톡 공유"
+                className="w-full h-full object-cover"
+              />
             </div>
             <span className="text-xs font-semibold text-[var(--text)]">카카오톡</span>
           </button>
@@ -131,14 +135,6 @@ export default function ShareSheet({ url, title, imageUrl, onClose }: ShareSheet
               𝕏
             </div>
             <span className="text-xs font-semibold text-[var(--text)]">X (트위터)</span>
-          </button>
-
-          {/* 더보기 */}
-          <button onClick={handleMore} className="flex flex-col items-center gap-2 group">
-            <div className="w-14 h-14 rounded-2xl bg-[#F5F4F2] dark:bg-[#3D3935] flex items-center justify-center text-2xl shadow-sm group-hover:bg-[#ECEAE8] dark:group-hover:bg-[#57534E] transition-all">
-              ···
-            </div>
-            <span className="text-xs font-semibold text-[var(--text)]">더보기</span>
           </button>
 
           {/* 링크 복사 */}
@@ -155,6 +151,14 @@ export default function ShareSheet({ url, title, imageUrl, onClose }: ShareSheet
             <span className="text-xs font-semibold text-[var(--text)]">
               {copied ? "복사됨!" : "링크 복사"}
             </span>
+          </button>
+
+          {/* 더보기 */}
+          <button onClick={handleMore} className="flex flex-col items-center gap-2 group">
+            <div className="w-14 h-14 rounded-2xl bg-[#F5F4F2] dark:bg-[#3D3935] flex items-center justify-center text-2xl shadow-sm group-hover:bg-[#ECEAE8] dark:group-hover:bg-[#57534E] transition-all">
+              ···
+            </div>
+            <span className="text-xs font-semibold text-[var(--text)]">더보기</span>
           </button>
         </div>
       </div>
