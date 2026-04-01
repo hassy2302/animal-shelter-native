@@ -43,7 +43,7 @@ export default function ShareSheet({ url, title, imageUrl, onClose }: ShareSheet
 
     if (!Kakao || !appKey) {
       if (typeof navigator.share === "function") {
-        navigator.share({ title: title ?? "유기동물 공고", url }).catch(() => {});
+        navigator.share({ title: title ?? "유기 동물 공고", url }).catch(() => {});
       } else {
         navigator.clipboard.writeText(url);
         alert("카카오 SDK를 불러오지 못했어요.\n링크가 복사됐으니 카카오톡에 붙여넣기 해주세요.");
@@ -63,7 +63,7 @@ export default function ShareSheet({ url, title, imageUrl, onClose }: ShareSheet
   };
 
   const handleX = () => {
-    const text = title ? `${title} 유기동물 공고` : "유기동물 공고";
+    const text = title ? `${title} 유기 동물 공고` : "유기 동물 공고";
     window.open(
       `https://x.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`,
       "_blank",
@@ -74,7 +74,7 @@ export default function ShareSheet({ url, title, imageUrl, onClose }: ShareSheet
 
   const handleMore = async () => {
     try {
-      await Share.share({ title: title ?? "유기동물 공고", url });
+      await Share.share({ title: title ?? "유기 동물 공고", url });
     } catch {
       // 취소 또는 오류 무시
     } finally {

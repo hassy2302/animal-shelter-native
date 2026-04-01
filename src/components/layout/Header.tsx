@@ -26,15 +26,6 @@ export default function Header() {
             새 가족을 찾고 있어요.
           </p>
         </div>
-        <div className="flex flex-col items-start sm:items-end gap-1.5 shrink-0">
-          <span className="text-xs text-[var(--muted)] font-semibold">데이터 출처</span>
-          <span className="text-sm bg-white/70 dark:bg-white/5 border border-[#E5E0D8] dark:border-[#44403C] text-[var(--muted)] px-2.5 py-0.5 rounded-full font-semibold">
-            🏛️ 국가동물보호정보시스템
-          </span>
-          <span className="text-sm bg-white/70 dark:bg-white/5 border border-[#E5E0D8] dark:border-[#44403C] text-[var(--muted)] px-2.5 py-0.5 rounded-full font-semibold">
-            🌆 대전광역시 유기동물공고현황
-          </span>
-        </div>
       </div>
     </div>
   );

@@ -34,7 +34,7 @@ export default function SplashOverlay() {
       <div className="text-center px-8">
         <div className="text-8xl mb-8">🐾</div>
         <h1 className="text-3xl font-black text-white mb-3 tracking-tight">
-          유기동물 공고
+          유기 동물 공고
         </h1>
         <p className="text-white/80 text-base font-medium leading-relaxed">
           보호소 동물을 한눈에 만나보세요

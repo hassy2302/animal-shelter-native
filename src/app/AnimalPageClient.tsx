@@ -363,7 +363,7 @@ export default function AnimalPageClient({ initialData }: Props) {
       <ScrollToTop />
 
       {/* 푸터 */}
-      <footer className="mt-12 py-6 border-t border-[var(--border)] text-center">
+      <footer className="mt-4 py-6 border-t border-[var(--border)] text-center">
         <p className="text-sm font-semibold text-[var(--text)] mb-1">유기동물을 발견하셨나요?</p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <a
@@ -382,6 +382,7 @@ export default function AnimalPageClient({ initialData }: Props) {
             🌐 홈페이지 신고
           </a>
         </div>
+        <p className="text-xs text-[var(--muted)] mt-4">유기 동물 정보 제공 : 농림축산식품부</p>
       </footer>
     </main>
   );
