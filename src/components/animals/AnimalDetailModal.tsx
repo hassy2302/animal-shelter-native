@@ -30,13 +30,14 @@ export default function AnimalDetailModal({ animal, onClose }: Props) {
   const [imgError, setImgError] = useState(false);
   const { isFavorite, toggle } = useFavorites();
   const {
-    noticeNo, kindNm, upkind, sexCd, age, colorCd, weight,
+    noticeNo, kindNm, kindFullNm, upkind, sexCd, age, colorCd, weight,
     careNm, careTel, orgNm, happenPlace, happenDt, noticeEdt,
     specialMark, popfile1, popfile2, processState, desertionNo,
   } = animal;
 
   const imgSrc = popfile1 || popfile2;
   const emoji = getAnimalEmoji(kindNm, upkind);
+  const kindLabel = kindFullNm || kindNm;
 
   const detailUrl = desertionNo
     ? `https://www.animal.go.kr/front/awtis/public/publicDtl.do?desertionNo=${desertionNo}`
@@ -72,7 +73,7 @@ export default function AnimalDetailModal({ animal, onClose }: Props) {
       className="fixed inset-0 z-50 flex items-end sm:items-center justify-center"
       role="dialog"
       aria-modal="true"
-      aria-label={`${kindNm} 상세정보`}
+      aria-label={`${kindLabel} 상세정보`}
     >
       {/* 백드롭 */}
       <div
@@ -85,7 +86,7 @@ export default function AnimalDetailModal({ animal, onClose }: Props) {
         {/* 헤더 */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--border)]">
           <div className="flex items-center gap-2 flex-wrap">
-            <h2 className="text-lg font-extrabold text-[var(--text)]">{kindNm}</h2>
+            <h2 className="text-lg font-extrabold text-[var(--text)]">{kindLabel}</h2>
             <StateBadge state={processState} />
           </div>
           <div className="flex items-center gap-1">

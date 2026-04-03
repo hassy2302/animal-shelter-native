@@ -24,13 +24,14 @@ function InfoRow({ label, value, accent }: { label: string; value: string; accen
 
 export default function AnimalCard({ animal }: { animal: Animal }) {
   const {
-    noticeNo, kindNm, upkind, sexCd, age, colorCd, weight,
+    noticeNo, kindNm, kindFullNm, upkind, sexCd, age, colorCd, weight,
     careNm, careTel, orgNm, happenPlace, happenDt, noticeEdt,
     specialMark, popfile1, processState, source,
   } = animal;
 
   const imgSrc = popfile1 || animal.popfile2;
   const emoji = getAnimalEmoji(kindNm, upkind);
+  const kindLabel = kindFullNm || kindNm;
   const [imgError, setImgError] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showShare, setShowShare] = useState(false);
@@ -76,7 +77,7 @@ export default function AnimalCard({ animal }: { animal: Animal }) {
         <div className="flex-1 min-w-0 flex flex-col gap-1 p-2.5 justify-center">
           {/* 종류 + 배지 */}
           <div className="flex items-center gap-1 flex-wrap mb-0.5">
-            <span className="text-sm font-extrabold text-[var(--text)] truncate">{kindNm}</span>
+            <span className="text-sm font-extrabold text-[var(--text)] truncate">{kindLabel}</span>
             <StateBadge state={processState} />
           </div>
           {/* 라벨형 정보 rows */}
