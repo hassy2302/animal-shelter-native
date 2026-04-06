@@ -88,7 +88,20 @@ export default function NotificationModal({ onClose }: Props) {
 
           {isEnabled && (
             <div>
-              <p className="text-xs font-semibold text-[var(--muted)] mb-2 uppercase tracking-wide">알림 받을 동물</p>
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wide">알림 받을 동물</p>
+                <button
+                  onClick={() => {
+                    const allIds = NOTIFICATION_CATEGORIES.map((c) => c.id);
+                    const allSelected = allIds.every((id) => categories.includes(id));
+                    updateCategories(allSelected ? [] : allIds);
+                  }}
+                  disabled={isLoading}
+                  className="text-xs text-brand-500 hover:text-brand-600 font-medium disabled:opacity-50"
+                >
+                  {NOTIFICATION_CATEGORIES.every((c) => categories.includes(c.id)) ? "전체 해제" : "전체 선택"}
+                </button>
+              </div>
               <div className="space-y-1">
                 {NOTIFICATION_CATEGORIES.map((cat) => {
                   const checked = categories.includes(cat.id);

@@ -7,7 +7,7 @@ import NotificationModal from "@/components/notifications/NotificationModal";
 
 export default function Header() {
   const { theme, toggle } = useTheme();
-  const { isNative, isEnabled } = useNotification();
+  const { isNative, isEnabled, categories } = useNotification();
   const [notifOpen, setNotifOpen] = useState(false);
 
   return (
@@ -19,10 +19,7 @@ export default function Header() {
             aria-label="알림 설정"
             className="relative w-8 h-8 flex items-center justify-center rounded-full bg-white/70 dark:bg-black/40 hover:bg-white dark:hover:bg-black/60 transition-colors text-base"
           >
-            🔔
-            {isEnabled && (
-              <span className="absolute top-0.5 right-0.5 w-2 h-2 rounded-full bg-brand-400 border border-white dark:border-black" />
-            )}
+            {isEnabled && categories.length > 0 ? "🔔" : "🔕"}
           </button>
         )}
         <button

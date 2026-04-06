@@ -118,6 +118,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
     const permResult = await PushNotifications.requestPermissions();
     if (permResult.receive !== "granted") throw new Error("알림 권한 거부됨");
 
+    await PushNotifications.removeAllListeners();
     await PushNotifications.register();
 
     return new Promise((resolve, reject) => {
